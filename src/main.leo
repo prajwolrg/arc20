@@ -190,7 +190,7 @@ program arc20.aleo {
     // The function `unwrap_public` burns wrapped ARC20 record in the registry and mints tokens here privately.
     transition unwrap_private(sender: arc20_registry.leo/ARC20Token.record) -> token {
         // Produce a token record for the specified receiver.
-        arc20_registry.leo/burn_private_from_arc20(sender);
+        arc20_registry.leo/burn_private_from_registry(sender);
 
         let unwrapped: token = token {
             owner: sender.owner,
@@ -201,5 +201,24 @@ program arc20.aleo {
         return unwrapped;
     }
 
+    ///////////////////
+    //// APPROVALS ////
+    ///////////////////
+
+    // The function `approve_public` allows `spender` to spend provided `amount`
+    transition approve_public(public spender: address, public amount: u64) {
+        // In the registry program, increments `arc20account[(arc20, receiver)]` by `amount`.
+        // If `arc20account[(arc20, receiver)]` does not exist, it will be created.
+        // If `arc20account[(arc20, receiver)] + amount` overflows, the transition is reverted.
+        arc20_registry.leo/approve_public_in_registry(self.caller, spender, amount);
+    }
+
+    // The function `unapprove_public` allows `spender` to spend provided `amount`
+    transition unapprove_public(public spender: address, public amount: u64) {
+        // In the registry program, increments `arc20account[(arc20, receiver)]` by `amount`.
+        // If `arc20account[(arc20, receiver)]` does not exist, it will be created.
+        // If `arc20account[(arc20, receiver)] + amount` overflows, the transition is reverted.
+        arc20_registry.leo/unapprove_public_in_registry(self.caller, spender, amount);
+    }
 
 }
