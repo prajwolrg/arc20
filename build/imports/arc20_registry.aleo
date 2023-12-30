@@ -176,7 +176,7 @@ finalize unapprove_public_in_registry:
     set r3 into arc20approvals[r0];
 
 
-function transfer_from_public:
+function transfer_from_public_in_registry:
     input r0 as address.public;
     input r1 as address.public;
     input r2 as address.public;
@@ -187,10 +187,10 @@ function transfer_from_public:
     hash.bhp256 r6 into r7 as field;
     cast r0 r1 into r8 as ARC20Account;
     hash.bhp256 r8 into r9 as field;
-    async transfer_from_public r7 r9 r3 r5 into r10;
-    output r10 as arc20_registry.aleo/transfer_from_public.future;
+    async transfer_from_public_in_registry r7 r9 r3 r5 into r10;
+    output r10 as arc20_registry.aleo/transfer_from_public_in_registry.future;
 
-finalize transfer_from_public:
+finalize transfer_from_public_in_registry:
     input r0 as field.public;
     input r1 as field.public;
     input r2 as u64.public;

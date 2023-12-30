@@ -264,7 +264,7 @@ program arc20_registry.aleo {
         Mapping::set(arc20approvals, approval, approval_amount - amount);
     }
 
-    transition transfer_from_public(public arc20: address, public from: address, public to: address, public amount: u64) {
+    transition transfer_from_public_in_registry(public arc20: address, public from: address, public to: address, public amount: u64) {
         // Calculate approval hash
         let approval: ARC20Approval = ARC20Approval {
             arc20: self.caller,
@@ -290,7 +290,7 @@ program arc20_registry.aleo {
         return then finalize(sender_accont_hash, receiver_accont_hash, amount, approval_hash);
     }
 
-    finalize transfer_from_public(sender: field, receiver: field, amount: u64, approval: field) {
+    finalize transfer_from_public_in_registry(sender: field, receiver: field, amount: u64, approval: field) {
         // Decrements `arc20approvals[hash(arc20, user, spender)]` by `amount`.
         // If `arc20approvals[hash(arc20, user, spender)]` does not exist, the transition is created.
         // If `arc20balances[hash(arc20, user, spender)] - amount` underflows, the transition is reverted.
